@@ -3,7 +3,7 @@
     Pokemon App
 
 #### App Description
-- There is a one page for shows all pokemon
+- There is one page for shows all pokemon
 - If you click button, change the pokemon with animation
 - No storyboard, just xib
 
