@@ -26,20 +26,20 @@ class PokemonVC: UIViewController {
     private let pokemonVMDelegate = PokemonViewModel()
     private var index = 0
     var isFlipped = false
-    
-    private var pokeNames: PokemonEntity? {
-        didSet{
-            guard let pokeNames = pokeNames else {
-                return
-            }
-            pokeNameLabel.text = pokeNames.name.capitalized
-            let setURL = URL(string: pokeNames.sprites.front_default)
-            pokeImageView.kf.setImage(with: setURL)
-            pokeHpValueLabel.text = String(pokeNames.stats[0].base_stat)
-            pokeAttackValueLabel.text = String(pokeNames.stats[1].base_stat)
-            pokeDefenseValueLabel.text = String(pokeNames.stats[2].base_stat)
-        }
-    }
+    private var pokeNames: PokemonEntity?
+//    private var pokeNames: PokemonEntity? {
+//        didSet{
+//            guard let pokeNames = pokeNames else {
+//                return
+//            }
+//            pokeNameLabel.text = pokeNames.name.capitalized
+//            let setURL = URL(string: pokeNames.sprites.front_default)
+//            pokeImageView.kf.setImage(with: setURL)
+//            pokeHpValueLabel.text = String(pokeNames.stats[0].base_stat)
+//            pokeAttackValueLabel.text = String(pokeNames.stats[1].base_stat)
+//            pokeDefenseValueLabel.text = String(pokeNames.stats[2].base_stat)
+//        }
+//    }
 
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -62,7 +62,20 @@ class PokemonVC: UIViewController {
     @IBAction func tappedNextNewPokemon(_ sender: UIButton) {
         index += 1
         pokemonVMDelegate.getNewPokemon(String(self.index))
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+            guard let self = self else {return}
+            self.changePokemon()
+        }
         flipCard()
+    }
+    
+    func changePokemon(){
+        pokeNameLabel.text = pokeNames!.name.capitalized
+        let setURL = URL(string: pokeNames!.sprites.front_default)
+        pokeImageView.kf.setImage(with: setURL)
+        pokeHpValueLabel.text = String(pokeNames!.stats[0].base_stat)
+        pokeAttackValueLabel.text = String(pokeNames!.stats[1].base_stat)
+        pokeDefenseValueLabel.text = String(pokeNames!.stats[2].base_stat)
     }
 }
 

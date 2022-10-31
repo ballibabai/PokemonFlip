@@ -28,7 +28,7 @@ final class PokemonApiCall {
             guard let data = response.data else { return }
             do {
                 let pokemon = try JSONDecoder().decode(PokemonEntity.self, from: data)
-                self.pokemon = pokemon //if i dont write this line again code success cuz i dont use this self.pokemon
+                self.pokemon = pokemon
                 self.getPokemonDelegate?.getPokemon(true)
             } catch {
                 print("Error decoding Pokemon: \(error)")
